@@ -80,16 +80,4 @@ def calculate_incident_solarpower(globaltime, latitude_array, longitude_array):
     gt = globaltime % DT
     intensity = _calc_solar_irradiance(RaceStartTime + gt)
     
-    return G_b * _power_coeff
-
-# # Example usage
-# if __name__ == "__main__":
-#     # Example input
-#     latitude_array = np.array([35.6895, 34.0522])  # Example latitudes
-#     longitude_array = np.array([139.6917, -118.2437])  # Example longitudes
-#     globaltime = 3600  # Example global time in seconds
-
-#     # Calculate the incident solar power
-#     power = calculate_incident_solarpower(globaltime, latitude_array, longitude_array)
-#     print(f"Incident Solar Power: {power} W")
-
+    return intensity * _power_coeff
