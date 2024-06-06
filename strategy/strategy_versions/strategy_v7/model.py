@@ -7,7 +7,7 @@ from constraints import get_bounds, objective, battery_acc_constraint_func
 from profiles import extract_profiles
 
 def main():
-    route_df = pd.read_csv("processed_route_data.csv").iloc[210:315]
+    route_df = pd.read_csv("./data/processed_route_data.csv").iloc[210:315]
     segment_array = route_df.iloc[:, 0].to_numpy()
     slope_array = route_df.iloc[:, 2].to_numpy()
     lattitude_array = route_df.iloc[:, 3].to_numpy()
@@ -38,7 +38,6 @@ def main():
         method=config.ModelMethod,
         constraints=constraints,
         options={
-            'verbose': 3,
         }
     )
     optimised_velocity_profile = np.array(optimised_velocity_profile.x)*1
