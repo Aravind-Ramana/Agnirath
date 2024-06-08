@@ -14,12 +14,10 @@ Wheels = 3
 StatorRotorAirGap = 1.5 * 10**-3
 
 # Resistive Coeff
-Cd = 0.092  # coefficient of drag
-
+CDA = 0.092
 ZeroSpeedCrr = 0.0045
 FrontalArea = 1 # m^2
-CDA=Cd*FrontalArea
-
+Cd = 0.092  # coefficient of drag
 
 # Solar Panel Data
 PanelArea = 6 # m^2
