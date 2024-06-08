@@ -72,7 +72,7 @@ def create_app(
             html.Div([
                 html.H2("Summary", style={'text-align': 'center', 'font-family': '"Space Grotesk", sans-serif'}),
                 html.P(f"Total Distance: {round(distances[-1]/1000, 3)} km"),
-                html.P(f"Time Taken: {time[-1]//3600}hrs {(time[-1]%3600)//60}mins {round(((time[-1]%3600)%60), 3)}secs"),
+                html.P(f"Time Taken: {time[-1]//3600-3}hrs {(time[-1]%3600)//60}mins {round(((time[-1]%3600)%60), 3)}secs"),
                 html.P(f"No of points: {len(distances)}pts"),
 
             ], style={'width': '25%', 'display': 'inline-block', 'vertical-align': 'top', 'padding-left': '20px', **custom_styles}),
@@ -157,6 +157,25 @@ def create_app(
                 },
                 style={'width': '45%', 'display': 'inline-block', **custom_styles}
             ),
+            dcc.Graph(
+                id='time-profile',
+                figure={
+                    'data': [
+                        go.Scatter(x=distances, y=time/3600, mode='lines+markers', name='Time'),
+                        go.Scatter(x=[322000, 322000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[588000, 588000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[987000, 987000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[1210000, 1210000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[1493000, 1493000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[1766000, 1766000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[2178000, 2178000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[2432000, 2432000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                        go.Scatter(x=[2720000, 2720000], y=[0, 100], mode='lines', name="ControlStop", line=dict(color='blue', dash='dot')),
+                    ],
+                    'layout': go.Layout(title='Time Distance Correlation', xaxis={'title': 'Distance'}, yaxis={'title': 'Net Time'})
+                },
+                style={'width': '45%', 'display': 'inline-block', **custom_styles}
+            ),
         ], style={'display': 'flex', 'flex-wrap': 'wrap', 'justify-content': 'center'})
     ], style={'background-color': '#ffffff', 'padding': '20px'})
 
@@ -167,7 +186,7 @@ if __name__ == '__main__':
     distances, velocity_profile, acceleration_profile, battery_profile, energy_consumption_profile, solar_profile, time = map(np.array, (output[c] for c in output.columns.to_list()))
 
     distances = distances.cumsum()
-    time = time.cumsum()
+    # time = time.cumsum()
 
     app = create_app(
         distances, velocity_profile, acceleration_profile, battery_profile,
